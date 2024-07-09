@@ -36,18 +36,39 @@ class Personagem {
     public atacar(): void {
         console.log(`${this.nome} atacou com ${this.ataque} de dano!`);
     }
+
+    public receberDano(dano: number): void {
+        this.vida -= dano;
+        console.log(`${this.nome} recebeu ${dano} de dano. Vida restante: ${this.vida}`);
+    }
 }
 
 class Guerreiro extends Personagem {
+    private escudo: number;
+
+    constructor(nome: string, vida: number, ataque: number, escudo: number) {
+        super(nome, vida, ataque);
+        this.escudo = escudo;
+    }
+
+    public usarEscudo(dano: number): number {
+        const danoReduzido = dano * 0.25;
+        const danoEfetivo = dano - danoReduzido;
+        const vidaAbsorvida = danoReduzido * 0.10;
+        this.receberDano(danoEfetivo);
+        this.setVida(this.getVida() + vidaAbsorvida);
+        console.log(`${this.getNome()} usou o escudo. Dano recebido: ${danoEfetivo}, vida absorvida: ${vidaAbsorvida}`);
+        return danoEfetivo;
+    }
+}
+
+class Arqueiro extends Personagem {
     constructor(nome: string, vida: number, ataque: number) {
         super(nome, vida, ataque);
     }
 
-    public golpeDuplo(): void {
-        const ataqueOriginal = this.getAtaque();
-        this.setAtaque(ataqueOriginal * 2);
-        console.log(`${this.getNome()} usou Golpe Duplo! Ataque temporariamente aumentado para ${this.getAtaque()}`);
-        this.setAtaque(ataqueOriginal); 
+    public ataquePreciso(): void {
+        console.log(`${this.getNome()} realizou um Ataque Preciso! Causando dano crítico de ${this.getAtaque() * 2}.`);
     }
 }
 
@@ -57,45 +78,24 @@ class Mago extends Personagem {
     }
 
     public bolaDeFogo(): void {
-        console.log(`${this.getNome()} lançou uma bola de fogo! Causando dano na área de ${this.getAtaque() * 5}`);
+        console.log(`${this.getNome()} lançou uma bola de fogo! Causando dano de ${this.getAtaque()}`);
     }
 }
 
-class Arqueiro extends Personagem {
-    private escudo: number;
+const guerreiro = new Guerreiro("Elvis", 250, 20, 30);
+const arqueiro = new Arqueiro("Robin", 250, 40);
+const mago = new Mago("Orion", 250, 40);
 
-    constructor(nome: string, vida: number, ataque: number, escudo: number) {
-        super(nome, vida, ataque);
-        this.escudo = escudo;
-    }
 
-    public getEscudo(): number {
-        return this.escudo;
-    }
+console.log("Arqueiro ataca Guerreiro");
+const danoArqueiro = arqueiro.getAtaque();
+guerreiro.usarEscudo(danoArqueiro);
 
-    public setEscudo(escudo: number): void {
-        this.escudo = escudo;
-    }
+console.log("Mago ataca Guerreiro");
+const danoMago = mago.getAtaque();
+guerreiro.receberDano(danoMago);
 
-    public ataquePreciso(): void {
-        console.log(`${this.getNome()} realizou um Ataque Preciso! Causando dano crítico de ${this.getAtaque() * 2}.`);
-    }
 
-    public usarEscudo(): void {
-        console.log(`${this.getNome()} está usando o escudo para se defender! Absorvendo ${this.escudo} de dano.`);
-    }
-}
-
-const guerra = new Guerreiro("Villard", 250, 50);
-const forcado = new Mago("Mago", 200, 50);
-const arca = new Arqueiro("Verde", 200, 50, 10);
-
-guerra.atacar();
-guerra.golpeDuplo();
-
-forcado.atacar();
-forcado.bolaDeFogo();
-
-arca.atacar();
-arca.ataquePreciso();
-arca.usarEscudo();
+console.log(`Vida final do ${guerreiro.getNome()}: ${guerreiro.getVida()}`);
+console.log(`Vida final do ${arqueiro.getNome()}: ${arqueiro.getVida()}`);
+console.log(`Vida final do ${mago.getNome()}: ${mago.getVida()}`);
