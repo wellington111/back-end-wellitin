@@ -1,8 +1,8 @@
 import { Pessoa } from './Pessoa';
 import { Projeto } from './Projeto';
-import { IAvaliavel } from './IAvaliavel';
 
-export class Freelancer extends Pessoa implements IAvaliavel {
+
+export class Freelancer extends Pessoa  {
     private areaDeEspecializacao: string;
     private projetos: Projeto[];
 
@@ -36,7 +36,6 @@ export class Freelancer extends Pessoa implements IAvaliavel {
         return "Freelancer";
     }
 
-    public avaliar(): void {
-        console.log(`Freelancer ${this.getNome()} está sendo avaliado.`);
-    }
+    
+    
 }

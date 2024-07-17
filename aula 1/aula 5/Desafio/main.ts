@@ -1,32 +1,57 @@
 import { Freelancer } from './Freelancer';
 import { Projeto } from './Projeto';
+import { Cliente } from './Cliente';
+import { FeedBack } from './Feedback';
 import { Avaliacao } from './Avaliaçao';
 
-// Criação de alguns freelancers
-const freelancer1 = new Freelancer('João', 'joao90@example.com', 'Desenvolvimento Web');
-const freelancer2 = new Freelancer('Joãozin', 'Joãozin3@example.com', 'Design Gráfico');
-const freelancer3 = new Freelancer('Wellitin', 'Wellin75@example.com', 'SEO');
 
-// Criação de alguns projetos
-const projeto1 = new Projeto('Site Institucional', 'Desenvolvimento de um site para uma empresa');
-const projeto2 = new Projeto('Logotipo', 'Criação de logotipo para uma startup');
-const projeto3 = new Projeto('Campanha SEO', 'Otimização para mecanismos de busca');
+//rodar freelancers
 
-// Atribuição de freelancers a projetos
-projeto1.atribuirFreelancer(freelancer1);
-projeto2.atribuirFreelancer(freelancer2);
-projeto3.atribuirFreelancer(freelancer3);
+const freelancer1 = new Freelancer('Pedro', 'pedro9809@gmail.com', 'Programador')
+const freelancer2 = new Freelancer('Wellitin', 'Wellitin75gmail.com', 'Escritor')
+const freelancer3 = new Freelancer('veronica', 'Veronica2030@gmail.com', 'Gerente')
 
-// Avaliação de freelancers nos projetos
-const avaliacao1 = new Avaliacao(freelancer1, projeto1, 9);
-const avaliacao2 = new Avaliacao(freelancer2, projeto2, 8);
-const avaliacao3 = new Avaliacao(freelancer3, projeto3, 7);
+//clientes
 
-avaliacao1.avaliar();
-avaliacao2.avaliar();
-avaliacao3.avaliar();
+const cliente1 = new Cliente('Vera', 'vera2025@gmail.com')
+const cliente2 = new Cliente('Pedro', ' Pedroca@gmail.com')
+const cliente3 = new Cliente('Victor', ' Victor098@gmail.com')
 
-// Testar atribuições e listagens
-console.log(`${projeto1.getNome()} - Freelancer: ${projeto1.getFreelancer()?.getNome()}, Especialidade: ${projeto1.getFreelancer()?.getAreaDeEspecializacao()}`);
-console.log(`${projeto2.getNome()} - Freelancer: ${projeto2.getFreelancer()?.getNome()}, Especialidade: ${projeto2.getFreelancer()?.getAreaDeEspecializacao()}`);
-console.log(`${projeto3.getNome()} - Freelancer: ${projeto3.getFreelancer()?.getNome()}, Especialidade: ${projeto3.getFreelancer()?.getAreaDeEspecializacao()}`);
+//teste projeto
+
+const projeto1 = new Projeto('Site', 'CriadorWeb', cliente1)
+const projeto2 = new Projeto('Wifi', 'Rede', cliente2)
+const projeto3 = new Projeto('Yotube', 'videos', cliente3)
+
+//atribuição
+
+projeto1.setFreelancer(freelancer1)
+projeto2.setFreelancer(freelancer2)
+projeto3.setFreelancer(freelancer3)
+        
+//concluidos
+
+projeto1.marcarConcluido();
+projeto2.marcarConcluido();
+projeto3.marcarConcluido();
+
+//FeedBacks
+
+const FeedBack1 = new FeedBack(cliente1, projeto1, 'Trabalho bem feito', 7)
+const FeedBack2 = new FeedBack(cliente2, projeto2, 'Trabalho otimo ', 10)
+const FeedBack3 = new FeedBack(cliente1, projeto3, 'Trabalho mal feito "_" ', 3)
+
+//Avaliacao
+
+const Avaliacao1 = new Avaliacao(freelancer1, projeto1, 9)
+Avaliacao1.adicionarFeedback(FeedBack1)
+const Avaliacao2 = new Avaliacao(freelancer2, projeto1, 8)
+Avaliacao2.adicionarFeedback(FeedBack2)
+const Avaliacao3 = new Avaliacao(freelancer3, projeto1, 5)
+//Avaliacao3.adicionarFeedback(FeedBack3)
+
+//avaliar
+
+Avaliacao1.avaliar();
+Avaliacao2.avaliar();
+Avaliacao3.avaliar();
